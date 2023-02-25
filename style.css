@@ -1,3 +1,17 @@
- * {
-	color: red
- }
+* {
+	color: black;
+	font-family: sans-serif;
+}
+
+table, th, tr{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+li {
+	margin: 0.6em 0em;
+}
+
+body {
+	font-size: 110%;
+}
