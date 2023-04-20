@@ -1,17 +1,22 @@
-* {
-	color: black;
-	font-family: sans-serif;
-}
-
-table, th, tr{
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
 li {
-	margin: 0.6em 0em;
+    margin: 0.6em 0em;
 }
 
 body {
-	font-size: 110%;
+    font-size: 120%;
+    margin: 1em;
+    font-family: sans-serif;
+    color: rgb(20, 20, 20);
+    background-color: rgb(232, 232, 232);
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: rgb(232, 232, 232);
+        background-color: rgb(32, 32, 32);
+    }
+
+    a {
+        color: rgb(56, 137, 231);
+    }
 }
