@@ -1,7 +1,7 @@
 // Initialize map
 var map = L.map('map', {
     attributionControl: false
-}).setView([40.886266, 29.085918], 13);
+}).setView([40.890655, 29.085283], 13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
 }).addTo(map);
@@ -9,6 +9,14 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Markers
 
 // Kınalıada
+
+var marker1 = L.marker([40.922588, 29.051593]);
+marker1.bindTooltip("1", {
+    permanent: true,
+    direction: 'center',
+    className: "single-digit"
+});
+marker1.addTo(map);
 
 var marker2 = L.marker([40.907445, 29.053212]);
 marker2.bindTooltip("2", {

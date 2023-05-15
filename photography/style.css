@@ -38,7 +38,7 @@ body {
     }
 }
 
-@media (max-width: 50em) {
+@media (max-width: 80em) {
     .himg {
         width: 100%;
     }
