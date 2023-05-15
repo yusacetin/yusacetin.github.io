@@ -1,6 +1,7 @@
 // Initialize map
 var map = L.map('map', {
-    attributionControl: false
+    attributionControl: false,
+    minZoom: 11,
 }).setView([40.890655, 29.085283], 13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
