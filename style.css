@@ -24,3 +24,9 @@ a {
         color: rgb(110, 178, 255);
     }
 }
+
+@media (max-width: 80em) {
+    body {
+        font-size: 110%;
+    }
+}
