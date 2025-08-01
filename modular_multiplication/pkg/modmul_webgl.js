@@ -149,6 +149,19 @@ export class Canvas {
         return this;
     }
     /**
+     * @returns {boolean}
+     */
+    adjust_view() {
+        const ret = wasm.canvas_adjust_view(this.__wbg_ptr);
+        if (ret[2]) {
+            throw takeFromExternrefTable0(ret[1]);
+        }
+        return ret[0] !== 0;
+    }
+    reset() {
+        wasm.canvas_reset(this.__wbg_ptr);
+    }
+    /**
      * @param {number} value
      */
     set_points(value) {
@@ -174,6 +187,34 @@ export class Canvas {
     }
     draw_points() {
         wasm.canvas_draw_points(this.__wbg_ptr);
+    }
+    /**
+     * @returns {number}
+     */
+    get_r() {
+        const ret = wasm.canvas_get_r(this.__wbg_ptr);
+        return ret;
+    }
+    /**
+     * @param {number} val
+     */
+    set_r(val) {
+        wasm.canvas_set_r(this.__wbg_ptr, val);
+    }
+    /**
+     * @param {number} val
+     * @param {number} mx
+     * @param {number} my
+     */
+    add_to_r(val, mx, my) {
+        wasm.canvas_add_to_r(this.__wbg_ptr, val, mx, my);
+    }
+    /**
+     * @param {number} dx
+     * @param {number} dy
+     */
+    move_shape(dx, dy) {
+        wasm.canvas_move_shape(this.__wbg_ptr, dx, dy);
     }
 }
 
