@@ -102,20 +102,6 @@ function getDataViewMemory0() {
     return cachedDataViewMemory0;
 }
 
-let cachedFloat32ArrayMemory0 = null;
-
-function getFloat32ArrayMemory0() {
-    if (cachedFloat32ArrayMemory0 === null || cachedFloat32ArrayMemory0.byteLength === 0) {
-        cachedFloat32ArrayMemory0 = new Float32Array(wasm.memory.buffer);
-    }
-    return cachedFloat32ArrayMemory0;
-}
-
-function getArrayF32FromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return getFloat32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
-}
-
 function takeFromExternrefTable0(idx) {
     const value = wasm.__wbindgen_export_2.get(idx);
     wasm.__externref_table_dealloc(idx);
@@ -203,12 +189,6 @@ export class Canvas {
     }
     /**
      * @param {number} val
-     */
-    set_r(val) {
-        wasm.canvas_set_r(this.__wbg_ptr, val);
-    }
-    /**
-     * @param {number} val
      * @param {number} mx
      * @param {number} my
      */
@@ -249,14 +229,6 @@ const PointFinalization = (typeof FinalizationRegistry === 'undefined')
 
 export class Point {
 
-    static __wrap(ptr) {
-        ptr = ptr >>> 0;
-        const obj = Object.create(Point.prototype);
-        obj.__wbg_ptr = ptr;
-        PointFinalization.register(obj, obj.__wbg_ptr, obj);
-        return obj;
-    }
-
     __destroy_into_raw() {
         const ptr = this.__wbg_ptr;
         this.__wbg_ptr = 0;
@@ -286,48 +258,6 @@ export class Shape {
     free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_shape_free(ptr, 0);
-    }
-    /**
-     * @param {number} r
-     * @param {number} g
-     * @param {number} b
-     */
-    set_color(r, g, b) {
-        wasm.shape_set_color(this.__wbg_ptr, r, g, b);
-    }
-    /**
-     * @param {number} i
-     * @returns {number}
-     */
-    get_match_index(i) {
-        const ret = wasm.shape_get_match_index(this.__wbg_ptr, i);
-        return ret >>> 0;
-    }
-    /**
-     * @param {number} i
-     * @returns {Point}
-     */
-    get_point_pos(i) {
-        const ret = wasm.shape_get_point_pos(this.__wbg_ptr, i);
-        return Point.__wrap(ret);
-    }
-    /**
-     * @returns {Float32Array}
-     */
-    get_points_vector() {
-        const ret = wasm.shape_get_points_vector(this.__wbg_ptr);
-        var v1 = getArrayF32FromWasm0(ret[0], ret[1]).slice();
-        wasm.__wbindgen_free(ret[0], ret[1] * 4, 4);
-        return v1;
-    }
-    /**
-     * @returns {Float32Array}
-     */
-    get_lines_vector() {
-        const ret = wasm.shape_get_lines_vector(this.__wbg_ptr);
-        var v1 = getArrayF32FromWasm0(ret[0], ret[1]).slice();
-        wasm.__wbindgen_free(ret[0], ret[1] * 4, 4);
-        return v1;
     }
 }
 
@@ -368,16 +298,6 @@ function __wbg_get_imports() {
     imports.wbg.__wbg_attachShader_3d4eb6af9e3e7bd1 = function(arg0, arg1, arg2) {
         arg0.attachShader(arg1, arg2);
     };
-    imports.wbg.__wbg_bindBuffer_309c9a6c21826cf5 = function(arg0, arg1, arg2) {
-        arg0.bindBuffer(arg1 >>> 0, arg2);
-    };
-    imports.wbg.__wbg_bufferData_3261d3e1dd6fc903 = function(arg0, arg1, arg2, arg3) {
-        arg0.bufferData(arg1 >>> 0, arg2, arg3 >>> 0);
-    };
-    imports.wbg.__wbg_buffer_609cc3eee51ed158 = function(arg0) {
-        const ret = arg0.buffer;
-        return ret;
-    };
     imports.wbg.__wbg_call_672a4d21634d4a24 = function() { return handleError(function (arg0, arg1) {
         const ret = arg0.call(arg1);
         return ret;
@@ -391,10 +311,6 @@ function __wbg_get_imports() {
     imports.wbg.__wbg_compileShader_0ad770bbdbb9de21 = function(arg0, arg1) {
         arg0.compileShader(arg1);
     };
-    imports.wbg.__wbg_createBuffer_9886e84a67b68c89 = function(arg0) {
-        const ret = arg0.createBuffer();
-        return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
-    };
     imports.wbg.__wbg_createProgram_da203074cafb1038 = function(arg0) {
         const ret = arg0.createProgram();
         return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
@@ -407,22 +323,12 @@ function __wbg_get_imports() {
         const ret = arg0.devicePixelRatio;
         return ret;
     };
-    imports.wbg.__wbg_disableVertexAttribArray_452cc9815fced7e4 = function(arg0, arg1) {
-        arg0.disableVertexAttribArray(arg1 >>> 0);
-    };
     imports.wbg.__wbg_document_d249400bd7bd996d = function(arg0) {
         const ret = arg0.document;
         return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
     };
     imports.wbg.__wbg_drawArrays_6d29ea2ebc0c72a2 = function(arg0, arg1, arg2, arg3) {
         arg0.drawArrays(arg1 >>> 0, arg2, arg3);
-    };
-    imports.wbg.__wbg_enableVertexAttribArray_93c3d406a41ad6c7 = function(arg0, arg1) {
-        arg0.enableVertexAttribArray(arg1 >>> 0);
-    };
-    imports.wbg.__wbg_getAttribLocation_959c0150cdd39cac = function(arg0, arg1, arg2, arg3) {
-        const ret = arg0.getAttribLocation(arg1, getStringFromWasm0(arg2, arg3));
-        return ret;
     };
     imports.wbg.__wbg_getContext_e9cf379449413580 = function() { return handleError(function (arg0, arg1, arg2) {
         const ret = arg0.getContext(getStringFromWasm0(arg1, arg2));
@@ -507,10 +413,6 @@ function __wbg_get_imports() {
         const ret = new Function(getStringFromWasm0(arg0, arg1));
         return ret;
     };
-    imports.wbg.__wbg_newwithbyteoffsetandlength_e6b7e69acd4c7354 = function(arg0, arg1, arg2) {
-        const ret = new Float32Array(arg0, arg1 >>> 0, arg2 >>> 0);
-        return ret;
-    };
     imports.wbg.__wbg_setheight_da683a33fa99843c = function(arg0, arg1) {
         arg0.height = arg1 >>> 0;
     };
@@ -536,14 +438,20 @@ function __wbg_get_imports() {
         const ret = typeof window === 'undefined' ? null : window;
         return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
     };
+    imports.wbg.__wbg_uniform1f_dc009a0e7f7e5977 = function(arg0, arg1, arg2) {
+        arg0.uniform1f(arg1, arg2);
+    };
+    imports.wbg.__wbg_uniform1i_ed95b6129dce4d84 = function(arg0, arg1, arg2) {
+        arg0.uniform1i(arg1, arg2);
+    };
+    imports.wbg.__wbg_uniform2f_56af4e1731d87421 = function(arg0, arg1, arg2, arg3) {
+        arg0.uniform2f(arg1, arg2, arg3);
+    };
     imports.wbg.__wbg_uniform3f_c40bec60fca69774 = function(arg0, arg1, arg2, arg3, arg4) {
         arg0.uniform3f(arg1, arg2, arg3, arg4);
     };
     imports.wbg.__wbg_useProgram_9b2660f7bb210471 = function(arg0, arg1) {
         arg0.useProgram(arg1);
-    };
-    imports.wbg.__wbg_vertexAttribPointer_550dc34903e3d1ea = function(arg0, arg1, arg2, arg3, arg4, arg5, arg6) {
-        arg0.vertexAttribPointer(arg1 >>> 0, arg2, arg3 >>> 0, arg4 !== 0, arg5, arg6);
     };
     imports.wbg.__wbg_viewport_e615e98f676f2d39 = function(arg0, arg1, arg2, arg3, arg4) {
         arg0.viewport(arg1, arg2, arg3, arg4);
@@ -571,10 +479,6 @@ function __wbg_get_imports() {
         const ret = arg0 === undefined;
         return ret;
     };
-    imports.wbg.__wbindgen_memory = function() {
-        const ret = wasm.memory;
-        return ret;
-    };
     imports.wbg.__wbindgen_number_get = function(arg0, arg1) {
         const obj = arg1;
         const ret = typeof(obj) === 'number' ? obj : undefined;
@@ -600,7 +504,6 @@ function __wbg_finalize_init(instance, module) {
     wasm = instance.exports;
     __wbg_init.__wbindgen_wasm_module = module;
     cachedDataViewMemory0 = null;
-    cachedFloat32ArrayMemory0 = null;
     cachedUint8ArrayMemory0 = null;
 
 
