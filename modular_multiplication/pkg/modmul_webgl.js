@@ -173,6 +173,12 @@ export class Canvas {
     set_multiplier(value) {
         wasm.canvas_set_multiplier(this.__wbg_ptr, value);
     }
+    /**
+     * @param {number} deg
+     */
+    set_rotation(deg) {
+        wasm.canvas_set_rotation(this.__wbg_ptr, deg);
+    }
     clear() {
         wasm.canvas_clear(this.__wbg_ptr);
     }
