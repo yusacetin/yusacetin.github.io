@@ -174,6 +174,9 @@ export class Canvas {
     draw() {
         wasm.canvas_draw(this.__wbg_ptr);
     }
+    draw_outline() {
+        wasm.canvas_draw_outline(this.__wbg_ptr);
+    }
     draw_lines() {
         wasm.canvas_draw_lines(this.__wbg_ptr);
     }
@@ -186,6 +189,12 @@ export class Canvas {
     get_r() {
         const ret = wasm.canvas_get_r(this.__wbg_ptr);
         return ret;
+    }
+    /**
+     * @param {boolean} value
+     */
+    set_enable_outline(value) {
+        wasm.canvas_set_enable_outline(this.__wbg_ptr, value);
     }
     /**
      * @param {number} val

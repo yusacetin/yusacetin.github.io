@@ -1,0 +1,76 @@
+/*
+This file is part of Circular Modular Multiplication Web.
+
+Circular Modular Multiplication Web is free software: you can redistribute it
+and/or modify it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+Circular Modular Multiplication Web is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with Circular Modular 
+Multiplication Web. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+*{
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.02em;
+}
+
+html{
+    background-color: rgb(24, 24, 24);
+    color: rgb(224, 224, 224);
+}
+
+#control-panel{
+    padding: 10px 10px;
+    background-color: rgba(32, 32, 32, 0.9);
+    position: absolute;
+    border-radius: 0 0 20px 0;
+    line-height: 1.2em;
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    max-width: 16em;
+}
+
+.control-item{
+    margin-bottom: 10px;
+    display: block;
+}
+
+.numinput{
+    width: 100px;
+    border-radius: 5px;
+    padding: 2px 5px;
+    margin-left: 5px;
+    outline: none;
+    border: black solid 2px;
+}
+
+.numinput:focus{
+    border: rgb(25, 118, 210) solid 2px;
+}
+
+#refreshlabel{
+    margin-left: 4px;
+}
+
+button {
+    background-color: rgb(13, 71, 161);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: rgb(25, 118, 210) solid 2px;
+}
+
+button:hover {
+    background-color: rgb(21, 101, 192);
+}
+
+button:active {
+    background-color: rgb(25, 118, 210);
+}
