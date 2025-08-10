@@ -102,6 +102,71 @@ function getDataViewMemory0() {
     return cachedDataViewMemory0;
 }
 
+function debugString(val) {
+    // primitive types
+    const type = typeof val;
+    if (type == 'number' || type == 'boolean' || val == null) {
+        return  `${val}`;
+    }
+    if (type == 'string') {
+        return `"${val}"`;
+    }
+    if (type == 'symbol') {
+        const description = val.description;
+        if (description == null) {
+            return 'Symbol';
+        } else {
+            return `Symbol(${description})`;
+        }
+    }
+    if (type == 'function') {
+        const name = val.name;
+        if (typeof name == 'string' && name.length > 0) {
+            return `Function(${name})`;
+        } else {
+            return 'Function';
+        }
+    }
+    // objects
+    if (Array.isArray(val)) {
+        const length = val.length;
+        let debug = '[';
+        if (length > 0) {
+            debug += debugString(val[0]);
+        }
+        for(let i = 1; i < length; i++) {
+            debug += ', ' + debugString(val[i]);
+        }
+        debug += ']';
+        return debug;
+    }
+    // Test for built-in
+    const builtInMatches = /\[object ([^\]]+)\]/.exec(toString.call(val));
+    let className;
+    if (builtInMatches && builtInMatches.length > 1) {
+        className = builtInMatches[1];
+    } else {
+        // Failed to match the standard '[object ClassName]'
+        return toString.call(val);
+    }
+    if (className == 'Object') {
+        // we're a user defined class or Object
+        // JSON.stringify avoids problems with cycles, and is generally much
+        // easier than looping through ownProperties of `val`.
+        try {
+            return 'Object(' + JSON.stringify(val) + ')';
+        } catch (_) {
+            return 'Object';
+        }
+    }
+    // errors
+    if (val instanceof Error) {
+        return `${val.name}: ${val.message}\n${val.stack}`;
+    }
+    // TODO we could test for more things here, like `Set`s and `Map`s.
+    return className;
+}
+
 function takeFromExternrefTable0(idx) {
     const value = wasm.__wbindgen_export_2.get(idx);
     wasm.__externref_table_dealloc(idx);
@@ -134,18 +199,8 @@ export class Canvas {
         CanvasFinalization.register(this, this.__wbg_ptr, this);
         return this;
     }
-    /**
-     * @returns {boolean}
-     */
-    adjust_view() {
-        const ret = wasm.canvas_adjust_view(this.__wbg_ptr);
-        if (ret[2]) {
-            throw takeFromExternrefTable0(ret[1]);
-        }
-        return ret[0] !== 0;
-    }
-    reset() {
-        wasm.canvas_reset(this.__wbg_ptr);
+    draw() {
+        wasm.canvas_draw(this.__wbg_ptr);
     }
     /**
      * @param {number} value
@@ -165,23 +220,33 @@ export class Canvas {
     set_rotation(deg) {
         wasm.canvas_set_rotation(this.__wbg_ptr, deg);
     }
-    clear() {
-        wasm.canvas_clear(this.__wbg_ptr);
+    /**
+     * @param {number} dx
+     * @param {number} dy
+     */
+    move_shape(dx, dy) {
+        wasm.canvas_move_shape(this.__wbg_ptr, dx, dy);
     }
-    update_fg_color() {
-        wasm.canvas_update_fg_color(this.__wbg_ptr);
+    /**
+     * @returns {boolean}
+     */
+    adjust_view() {
+        const ret = wasm.canvas_adjust_view(this.__wbg_ptr);
+        if (ret[2]) {
+            throw takeFromExternrefTable0(ret[1]);
+        }
+        return ret[0] !== 0;
     }
-    draw() {
-        wasm.canvas_draw(this.__wbg_ptr);
+    reset() {
+        wasm.canvas_reset(this.__wbg_ptr);
     }
-    draw_outline() {
-        wasm.canvas_draw_outline(this.__wbg_ptr);
-    }
-    draw_lines() {
-        wasm.canvas_draw_lines(this.__wbg_ptr);
-    }
-    draw_points() {
-        wasm.canvas_draw_points(this.__wbg_ptr);
+    /**
+     * @param {number} val
+     * @param {number} mx
+     * @param {number} my
+     */
+    add_to_r(val, mx, my) {
+        wasm.canvas_add_to_r(this.__wbg_ptr, val, mx, my);
     }
     /**
      * @returns {number}
@@ -197,19 +262,16 @@ export class Canvas {
         wasm.canvas_set_enable_outline(this.__wbg_ptr, value);
     }
     /**
-     * @param {number} val
-     * @param {number} mx
-     * @param {number} my
+     * @param {boolean} value
      */
-    add_to_r(val, mx, my) {
-        wasm.canvas_add_to_r(this.__wbg_ptr, val, mx, my);
+    set_use_rects(value) {
+        wasm.canvas_set_use_rects(this.__wbg_ptr, value);
     }
     /**
-     * @param {number} dx
-     * @param {number} dy
+     * @param {number} value
      */
-    move_shape(dx, dy) {
-        wasm.canvas_move_shape(this.__wbg_ptr, dx, dy);
+    set_rect_width(value) {
+        wasm.canvas_set_rect_width(this.__wbg_ptr, value);
     }
 }
 
@@ -373,18 +435,18 @@ function __wbg_get_imports() {
         const ret = arg0.getUniformLocation(arg1, getStringFromWasm0(arg2, arg3));
         return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
     };
+    imports.wbg.__wbg_get_67b2ba62fc30de12 = function() { return handleError(function (arg0, arg1) {
+        const ret = Reflect.get(arg0, arg1);
+        return ret;
+    }, arguments) };
+    imports.wbg.__wbg_get_74b8744f6a23f4fa = function(arg0, arg1, arg2) {
+        const ret = arg0[getStringFromWasm0(arg1, arg2)];
+        return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+    };
     imports.wbg.__wbg_height_838cee19ba8597db = function(arg0) {
         const ret = arg0.height;
         return ret;
     };
-    imports.wbg.__wbg_innerHeight_05f4225d754a7929 = function() { return handleError(function (arg0) {
-        const ret = arg0.innerHeight;
-        return ret;
-    }, arguments) };
-    imports.wbg.__wbg_innerWidth_7e0498dbd876d498 = function() { return handleError(function (arg0) {
-        const ret = arg0.innerWidth;
-        return ret;
-    }, arguments) };
     imports.wbg.__wbg_instanceof_HtmlCanvasElement_2ea67072a7624ac5 = function(arg0) {
         let result;
         try {
@@ -473,6 +535,13 @@ function __wbg_get_imports() {
         const v = arg0;
         const ret = typeof(v) === 'boolean' ? (v ? 1 : 0) : 2;
         return ret;
+    };
+    imports.wbg.__wbindgen_debug_string = function(arg0, arg1) {
+        const ret = debugString(arg1);
+        const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len1 = WASM_VECTOR_LEN;
+        getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
+        getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
     };
     imports.wbg.__wbindgen_init_externref_table = function() {
         const table = wasm.__wbindgen_export_2;
