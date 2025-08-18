@@ -412,9 +412,6 @@ function __wbg_get_imports() {
     imports.wbg.__wbg_linkProgram_067ee06739bdde81 = function(arg0, arg1) {
         arg0.linkProgram(arg1);
     };
-    imports.wbg.__wbg_log_c222819a41e063d3 = function(arg0) {
-        console.log(arg0);
-    };
     imports.wbg.__wbg_newnoargs_105ed471475aaf50 = function(arg0, arg1) {
         const ret = new Function(getStringFromWasm0(arg0, arg1));
         return ret;
