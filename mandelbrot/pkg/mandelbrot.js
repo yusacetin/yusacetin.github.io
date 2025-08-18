@@ -212,11 +212,38 @@ export class JsInterface {
         wasm.jsinterface_zoom(this.__wbg_ptr, val, mx, my);
     }
     /**
+     * @param {number} val
+     */
+    set_zoom(val) {
+        wasm.jsinterface_set_zoom(this.__wbg_ptr, val);
+    }
+    /**
      * @returns {number}
      */
     get_zoom() {
         const ret = wasm.jsinterface_get_zoom(this.__wbg_ptr);
         return ret;
+    }
+    /**
+     * @returns {number}
+     */
+    get_center_x() {
+        const ret = wasm.jsinterface_get_center_x(this.__wbg_ptr);
+        return ret;
+    }
+    /**
+     * @returns {number}
+     */
+    get_center_y() {
+        const ret = wasm.jsinterface_get_center_y(this.__wbg_ptr);
+        return ret;
+    }
+    /**
+     * @param {number} x
+     * @param {number} y
+     */
+    set_center(x, y) {
+        wasm.jsinterface_set_center(this.__wbg_ptr, x, y);
     }
 }
 
