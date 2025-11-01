@@ -1,0 +1,53 @@
+<!--
+This file is part of Circular Modular Multiplication Web.
+
+Circular Modular Multiplication Web is free software: you can redistribute it
+and/or modify it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+Circular Modular Multiplication Web is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with Circular Modular 
+Multiplication Web. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Circular Modular Multiplication</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <div id="control-panel">
+            <div class="control-item">
+                <label>・Zoom via mouse wheel, move by dragging</label><br>
+                <label>・Works better on Chrome</label><br>
+                <label>・Only use values you think your computer can handle</label>
+            </div>
+            <div class="control-item">
+                <label>No. of Points: </label>
+                <input id="no-of-pts-input" type="number" min="0" class="numinput" onkeyup="updateCircle()" onmousewheel="updateCircle()">
+            </div>
+            <div class="control-item">
+                <label>Multiplier: </label>
+                <input id="mul-input" type="number" min="0" class="numinput" onkeyup="updateCircle()" onmousewheel="updateCircle()">
+            </div>
+            <div class="control-item">
+                <label>Line Width: </label>
+                <input id="line-width-input" type="number" min="0.002" step="0.01" class="numinput" onkeyup="updateCircle()" onmousewheel="updateCircle()">
+            </div>
+            <div class="control-item">
+                <input type="checkbox" id="autorefreshbox" checked="true"/>
+                <label for="autorefreshbox" id="refreshlabel">Auto refresh</label>
+            </div>
+            <div class="has-button">
+                <button id="apply" type="button" onclick="buttonUpdateCircle()">Apply</button>
+            </div>
+        </div>
+        <canvas id="canvas"></canvas>
+    </body>
+</html>
